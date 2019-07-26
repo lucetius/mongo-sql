@@ -1,3 +1,4 @@
+const utils = require('../lib/utils');
 
 /**
  * Conditionals
@@ -133,7 +134,8 @@ conditionals.add('$in', { cascade: false }, function(column, set, values, collec
 
     if(setNoNulls.length > 0) {
       var inExpression = column + ' in (' + setNoNulls.map( function(val){
-        return '$' + values.push( val );
+        return utils.quoteObject(val);
+        // return '$' + values.push( val );
       }).join(', ') + ')'
       return hasNulls ? '(' + inExpression + ' or ' + column + ' is null)' : inExpression
     }
